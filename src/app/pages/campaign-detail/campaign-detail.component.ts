@@ -58,8 +58,17 @@ export class CampaignDetailComponent implements OnInit {
   getProcessStatus(status: number): string {
     switch (status) {
       case 1: return 'Pendiente';
+      case 2: return 'Enviado';
+      case 3: return 'Error';
+      default: return 'Desconocido';
+    }
+  }
+
+  getProcessCampaignStatus(process_status: number):string {
+    switch (process_status) {
+      case 1: return 'Pendiente';
       case 2: return 'En proceso';
-      case 3: return 'Finalizada';
+      case 3: return 'Finalizado';
       default: return 'Desconocido';
     }
   }

@@ -28,5 +28,5 @@ export const env = {
 ✅ Si necesitas conectar a una API diferente (otro puerto, entorno o backend), modifica la propiedad apiUrl en este archivo.
 
 ## Evidencias
-![img.png](img.png)
-![img_1.png](img_1.png)
+![img_3.png](img_3.png)
+![img_2.png](img_2.png)
