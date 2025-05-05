@@ -15,7 +15,7 @@ La aplicación se conecta a una API REST mediante una URL base que está definid
 
 Por defecto, la URL de la API en el entorno de desarrollo se encuentra configurada en el archivo:
 ```bash
-src/environments/environment.ts
+src/environments/env.ts
 ```
 
 con el siguiente valor:
@@ -26,3 +26,7 @@ export const env = {
 };
 ```
 ✅ Si necesitas conectar a una API diferente (otro puerto, entorno o backend), modifica la propiedad apiUrl en este archivo.
+
+## Evidencias
+![img.png](img.png)
+![img_1.png](img_1.png)
