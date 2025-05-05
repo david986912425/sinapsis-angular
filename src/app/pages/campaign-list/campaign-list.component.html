@@ -1,0 +1,86 @@
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Listado de campañas</mat-card-title>
+      <mat-card-subtitle>Gestiona y visualiza todas tus campañas</mat-card-subtitle>
+      <div class="header-actions">
+        <button mat-raised-button color="primary" (click)="openCreateDialog()">
+          <mat-icon>add</mat-icon> Nueva Campaña
+        </button>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="filter-section">
+        <form [formGroup]="filterForm" class="filter-form">
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha inicio</mat-label>
+            <input matInput [matDatepicker]="pickerStart" formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+            <mat-datepicker #pickerStart></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha fin</mat-label>
+            <input matInput [matDatepicker]="pickerEnd" formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" (click)="filterCampaigns()">
+            <mat-icon>filter_list</mat-icon> Filtrar
+          </button>
+        </form>
+      </div>
+
+      <div class="table-container">
+        <table mat-table [dataSource]="campaigns" class="mat-elevation-z2">
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let campaign">{{ campaign.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Estado</th>
+            <td mat-cell *matCellDef="let campaign">
+              <span class="status-chip" [ngClass]="getStatusClass(campaign.process_status)">
+                {{ getProcessStatus(campaign.process_status) }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="created_at">
+            <th mat-header-cell *matHeaderCellDef>Fec. Creación</th>
+            <td mat-cell *matCellDef="let campaign">{{ campaign.created_at | date }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="process_date">
+            <th mat-header-cell *matHeaderCellDef>Fec. Envío</th>
+            <td mat-cell *matCellDef="let campaign">{{ campaign.process_date | date }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="process_hour">
+            <th mat-header-cell *matHeaderCellDef>Hor. Envío</th>
+            <td mat-cell *matCellDef="let campaign">{{ campaign.process_hour }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let campaign">
+              <a mat-button color="primary" [routerLink]="['/campaigns', campaign.uuid]">
+                Ver mensajes
+              </a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="6">No hay campañas disponibles</td>
+          </tr>
+        </table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

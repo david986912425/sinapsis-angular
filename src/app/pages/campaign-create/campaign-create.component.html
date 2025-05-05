@@ -1,0 +1,63 @@
+<h1 mat-dialog-title>Nueva Campaña</h1>
+<div mat-dialog-content>
+  <p>Ingrese los datos correspondientes</p>
+  <form [formGroup]="campaignForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Mensaje</mat-label>
+      <textarea matInput formControlName="message_text"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Fecha de envío</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="process_date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Hora de envío</mat-label>
+      <input matInput formControlName="process_hour" placeholder="09:30">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Selecciona un usuario</mat-label>
+
+      <mat-select formControlName="user_uuid" [disabled]="!users || users.length === 0">
+        <mat-option *ngFor="let user of users" [value]="user.uuid">
+          {{ user.username }}
+        </mat-option>
+      </mat-select>
+
+      <mat-hint *ngIf="!users || users.length === 0" style="color: red;">
+        No hay usuarios disponibles
+      </mat-hint>
+    </mat-form-field>
+
+    <div formArrayName="phone_list">
+      <div *ngFor="let phone of phoneList.controls; let i = index">
+        <mat-form-field appearance="outline">
+          <mat-label>Teléfono {{i + 1}}</mat-label>
+          <div style="display: flex">
+            <input matInput [formControlName]="i">
+            <button mat-icon-button color="warn" *ngIf="phoneList.length > 1" (click)="removePhone(i)">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        </mat-form-field>
+      </div>
+      <button mat-button color="primary" (click)="addPhone()">
+        <mat-icon>add</mat-icon> Agregar teléfono
+      </button>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="submit()" [disabled]="campaignForm.invalid">Guardar</button>
+</div>
